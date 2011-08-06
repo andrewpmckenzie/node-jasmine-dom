@@ -22,13 +22,15 @@ examples
     bin/jasmine-dom --runner examples/runner.html --format nice
 
 will output:
+<code>
     Failed: 
      - In Example functions, Should fail!!: Expected 3 to equal 8.
-
+</code>
 
     bin/jasmine-dom --runner examples/runner.html --format junit --output javascript_results.xml
 
 will write to javascript_results.xml:
+<code>
     <testsuite>
         <testcase classname="/Users/andrew/development/node-jasmine-dom/examples/runner.html.Example_functions_that_update_the_DOM.Should_add_two_numbers" name="expect toEqual 7" time="undefined"/>
         <testcase classname="/Users/andrew/development/node-jasmine-dom/examples/runner.html.Example_functions.Should_multiply_two_numbers" name="expect toEqual 40" time="undefined"/>
@@ -51,6 +53,7 @@ will write to javascript_results.xml:
             </failure>
         </testcase>
     </testsuite>
+</code>
 
 have you seen **[jasmine-node][3]**?
 ------------------------------------
