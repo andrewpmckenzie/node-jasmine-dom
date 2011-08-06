@@ -5,6 +5,11 @@ Run your browser-based [jasmine][1] specs headless with [node.js][2]. Then
 output in one of many formats such as JSON or JUnit XML (perfect
 for integration with CI servers like [Jenkins][3]).
 
+installation
+------------
+1. you've got [npm][4], right?
+2. Groovy. <code>npm install jasmine-dom</code>, and you're away laughing.
+
 usage
 -----
 Construct your SpecRunner.html as shown in the jasmine examples,
@@ -57,7 +62,7 @@ will write to javascript_results.xml:
         </testcase>
     </testsuite>
 
-have you seen **[jasmine-node][4]**?
+have you seen **[jasmine-node][5]**?
 ------------------------------------
 It's provided a lot of inspiration for this project, and may be just what
 you're looking for. If you're not reliant on a DOM, then it's worth checking
@@ -66,4 +71,5 @@ out.
 [1]: http://pivotal.github.com/jasmine/
 [2]: http://nodejs.org/
 [3]: http://jenkins-ci.org/
-[4]: https://github.com/mhevery/jasmine-node
+[4]: http://npmjs.org/
+[5]: https://github.com/mhevery/jasmine-node
