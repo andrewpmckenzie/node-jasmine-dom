@@ -17,6 +17,10 @@ then run:
 
     jasmine-dom --runner path/to/SpecRunner.html
 
+or
+
+    jasmine-dom --config path/to/config.yaml
+
 You can optionally provide the following arguments:
 
  * <code>--help</code>, provides usage information
@@ -37,6 +41,21 @@ of your tests. The tests will run every 3000ms, and the page ajaximatically upda
 
 If you'd like to see the default jasmine html, visit http://localhost:8090/jasmine. Note, the result is still
 obtained via the nodejs runner (i.e. it wasn't run in your browser).
+
+specifying runners
+------------------
+A single runner file can be provided via the <code>--runner <path_to_runner></code> command. To specify more than one
+runner, use the <code>--config <path_to_config></code> argument and a yaml config file in the format:
+
+    ---
+      test_one:
+        name: This is the name of the first test
+        runner: path/to/runner_1.html
+      test_two:
+        name: Example test two
+        runner: path/to/another/runner.html
+
+The config file allows you to provide names for your runners. These names will be used when identifying failing tests.
 
 example 1
 ---------
