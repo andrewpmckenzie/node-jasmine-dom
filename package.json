@@ -12,7 +12,8 @@
 
 ,   "engines"     : { "node" : ">= 0.4.9" }
 ,   "dependencies": { "jsdom" : "0.2.1",
-                      "node-static" : "0.5.7"
+                      "node-static" : "0.5.7",
+                      "yaml" : "0.2.1"
                     }
 ,   "bin"         : "bin/jasmine-dom"
 ,   "main"        : "lib/jasmine-dom"
