@@ -31,11 +31,14 @@ function getArguments(args){
 
 var arguments = getArguments(process.argv);
 var options = {
-	format: arguments.format || "simple",
+	format: arguments.format || "default",
 	output: arguments.output || null,
 	debug: "debug" in arguments,
 	runner: arguments.runner,
-	help: "help" in arguments
+	server: "server" in arguments,
+	port: arguments.server,
+	help: "help" in arguments,
+	refreshInterval: arguments.refresh
 };
 
 function _getAbsolutePath(file){
@@ -49,7 +52,7 @@ function _getAbsolutePath(file){
 };
 
 function _getUsage(){
-	return "Usage: node run.js --runner <path> [--format simple|nice|json|html|junit] [--output <path>] [--help]";
+	return "Usage: node run.js --runner <path> [--format simple|nice|json|html|junit] [--output <path>] [--server [port] [--refresh <ms interval>]] [--help]";
 };
 
 function _formatNice(obj){
@@ -70,6 +73,7 @@ function _format(report){
 
 	switch(options.format){
 		case 'simple':
+		case 'default':
 			result = report.simple.status;
 			break;
 		case 'json':
@@ -99,6 +103,8 @@ function _output(text){
 		require('fs').writeFile(file,text,function(err){
 			if(err) console.log("Something went wrong writing the report to disk: ",err);
 		});
+	} else if(options.server) {
+	    return;
 	} else {
 		console.log(text);
 	}
@@ -127,6 +133,9 @@ require('../lib/jasmine-dom').run({
 	runners: [
 		_getAbsolutePath(options.runner)
 	],
+	serve: options.server,
+	port: options.port,
+	refreshInterval: options.refreshInterval,
 	debug: options.debug,
 	onDone: function(report){
 		_processReport(report);
