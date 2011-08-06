@@ -1,9 +1,9 @@
 node-jasmine-dom
 ================
 
-Run your browser-based [jasmine][1] specs headless with node.js. Then 
+Run your browser-based [jasmine][1] specs headless with [node.js][2]. Then 
 output in one of many formats such as JSON or JUnit XML (perfect
-for integration with CI servers like [Jenkins][2]).
+for integration with CI servers like [Jenkins][3]).
 
 usage
 -----
@@ -57,12 +57,13 @@ will write to javascript_results.xml:
         </testcase>
     </testsuite>
 
-have you seen **[jasmine-node][3]**?
+have you seen **[jasmine-node][4]**?
 ------------------------------------
 It's provided a lot of inspiration for this project, and may be just what
 you're looking for. If you're not reliant on a DOM, then it's worth checking
 out.
 
 [1]: http://pivotal.github.com/jasmine/
-[2]: http://jenkins-ci.org/
-[3]: https://github.com/mhevery/jasmine-node
+[2]: http://nodejs.org/
+[3]: http://jenkins-ci.org/
+[4]: https://github.com/mhevery/jasmine-node
