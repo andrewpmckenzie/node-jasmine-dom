@@ -49,22 +49,21 @@ runner, use the <code>--config <path_to_config></code> argument and a yaml confi
 
     ---
       test_one:
-        name: This is the name of the first test
+        name: This is the name of the first set of tests
         runner: path/to/runner_1.html
       test_two:
-        name: Example test two
+        name: This is the name of the second set of tests
         runner: path/to/another/runner.html
 
 The config file allows you to provide names for your runners. These names will be used when identifying failing tests.
 
 example 1
 ---------
-    jasmine-dom --runner examples/runner.html --format nice
+    jasmine-dom --runner examples/runner.html
 
 will output:
 
-    Failed: 
-     - In Example functions, Should fail!!: Expected 3 to equal 8.
+    Failed.
 
 example 2
 ---------
@@ -95,6 +94,27 @@ will write to javascript_results.xml:
             </failure>
         </testcase>
     </testsuite>
+
+example 3
+---------
+
+    jasmine-dom --config ./examples/config.yaml --format nice
+
+with ./examples/config.yaml:
+
+    ---
+      test_one:
+        name: Example test one
+        runner: ./runner.html
+      test_two:
+        name: Example test two
+        runner: ./runner2.html
+
+will output:
+
+    Failed: 
+     - In Example test two >> Example functions (some more) >> Should fail!! :: Expected false to be truthy.
+     - In Example test one >> Example functions >> Should fail!! :: Expected 3 to equal 8.
 
 have you seen **[jasmine-node][5]**?
 ------------------------------------
