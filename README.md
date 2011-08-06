@@ -13,6 +13,7 @@ then run:
     bin/jasmine-dom --runner path/to/SpecRunner.html
 
 You can optionally provide the following arguments:
+
  * <code>--help</code>, provides usage information
  * <code>--format simple|nice|json|html|junit</code>, displays the result in the specified format
  * <code>--output path</code>, writes the output to the specified file
