@@ -24,7 +24,7 @@ You can optionally provide the following arguments:
  * <code>--output path</code>, writes the output to the specified file
  * <code>--server [port]</code>, serves a simple (but effective) page showing the current state
                                  of the tests. You can also specify an optional <code>--refresh
-                                 intervalInMS<code> argument to specify the wait between running
+                                 intervalInMS</code> argument to specify the wait between running
                                  the tests (because the server is constantly running 'em).
 
 server
