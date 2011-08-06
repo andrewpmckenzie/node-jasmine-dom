@@ -52,7 +52,8 @@ function _getAbsolutePath(file){
 };
 
 function _getUsage(){
-	return "Usage: node run.js --runner <path> [--format simple|nice|json|html|junit] [--output <path>] [--server [port] [--refresh <ms interval>]] [--help]";
+	return "Usage: node run.js --runner <path> [--format simple|nice|json|html|junit] [--output <path>] [--server [port] [--refresh <ms interval>]] [--help]\n\n" +
+	       "For more information, visit https://github.com/andrewpmckenzie/node-jasmine-dom";
 };
 
 function _formatNice(obj){

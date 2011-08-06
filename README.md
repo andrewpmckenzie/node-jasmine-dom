@@ -66,6 +66,17 @@ will write to javascript_results.xml:
         </testcase>
     </testsuite>
 
+server
+------
+
+    jasmine-dom --runner examples/runner.html --server 8090 --refresh 3000
+
+will run a server on http://localhost:8090/. Here a simple green or red page will reflect the current state
+of your tests. The tests will be run every 3000ms, and the page ajaximatically updated with the result.
+
+If you'd like to see the default jasmine html, visit http://localhost:8090/jasmine. Note, the result is still
+obtained via the nodejs runner (i.e. it wasn't run in your browser).
+
 have you seen **[jasmine-node][5]**?
 ------------------------------------
 It's provided a lot of inspiration for this project, and may be just what
