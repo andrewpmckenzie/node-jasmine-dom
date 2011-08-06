@@ -15,7 +15,7 @@ usage
 Construct your SpecRunner.html as shown in the jasmine examples,
 then run:
 
-    bin/jasmine-dom --runner path/to/SpecRunner.html
+    jasmine-dom --runner path/to/SpecRunner.html
 
 You can optionally provide the following arguments:
 
@@ -25,7 +25,7 @@ You can optionally provide the following arguments:
 
 example 1
 ---------
-    bin/jasmine-dom --runner examples/runner.html --format nice
+    jasmine-dom --runner examples/runner.html --format nice
 
 will output:
 
