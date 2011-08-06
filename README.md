@@ -17,8 +17,8 @@ You can optionally provide the following arguments:
  * <code>--format simple|nice|json|html|junit</code>, displays the result in the specified format
  * <code>--output path</code>, writes the output to the specified file
 
-examples
---------
+example 1
+---------
     bin/jasmine-dom --runner examples/runner.html --format nice
 
 will output:
@@ -26,7 +26,8 @@ will output:
     Failed: 
      - In Example functions, Should fail!!: Expected 3 to equal 8.
 
-****
+example 2
+---------
 
     bin/jasmine-dom --runner examples/runner.html --format junit --output javascript_results.xml
 
