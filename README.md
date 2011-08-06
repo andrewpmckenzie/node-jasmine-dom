@@ -35,7 +35,7 @@ will output:
 example 2
 ---------
 
-    bin/jasmine-dom --runner examples/runner.html --format junit --output javascript_results.xml
+    jasmine-dom --runner examples/runner.html --format junit --output javascript_results.xml
 
 will write to javascript_results.xml:
 
