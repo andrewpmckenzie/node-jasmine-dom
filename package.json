@@ -1,0 +1,11 @@
+{
+    "name"        : "jasmine-dom"
+
+,   "version"     : "0.0.1"
+,   "description" : "Run your jasmine html SpecRunner in node.js."
+,   "keywords"    : ["testing","bdd","jasmine"]
+,   "author"      : "Andrew McKenzie <andrew@mckenzie.name> (http://andrew.mckenzie.name)"
+,   "thanks-to"   : "jasmine-node"
+
+,   "main"        : "./lib/jasmine-dom"
+}
