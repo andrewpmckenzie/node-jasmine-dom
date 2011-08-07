@@ -1,0 +1,78 @@
+<html>
+<head>
+    <title>node-jasmine-dom: headless node.js runner</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    
+    <h1 class="title">node-jasmine-dom</h1>
+    
+    <div class="column left">
+ 
+        <h2>1. set yourself up</h2>
+        <div class="section">
+            <ol>
+                <li> install <a href="http://node.js">node</a> and <a href="http://npmjs.org">npm</a>.
+                <li> run <code>sudo npm install -g jasmine-dom</code>
+                <li> make some <a href="http://pivotal.github.com/jasmine/">jasmine</a> specs (or take a look at <a href="https://github.com/andrewpmckenzie/node-jasmine-dom/tree/master/examples">some examples</a>)
+            </ol>
+        </div>
+        
+        <h2>2. run your tests</h2>
+        <div class="section">
+<pre class="dark"><code>$ jasmine-dom --runner /path/to/your/SpecRunner.html --format nice
+
+Failed: 
+    - In /path/to/your/SpecRunner.html >> Example functions 
+      >> Should fail!! :: Expected 3 to equal 8.
+</code></pre>
+        </div>
+        
+        <h2>3. serve your tests</h2>
+        <div class="section">
+            <pre class="dark"><code>$ jasmine-dom --runner path/to/your/SpecRunner.html --server 8081</code></pre>
+            <img src="images/PASS.jpg" alt="PASS" class="half">
+            <img src="images/FAIL.jpg" alt="FAIL" class="half">
+        </div>
+
+
+
+        <h2>4. make a config</h2>
+        <div class="section">
+            <span class="blue">Config.yml:</span>
+<pre class="light"><code>---
+  test_one:
+    name: Example test one
+    runner: ./runner.html
+  test_two:
+    name: Example test two
+    runner: ./runner2.html
+
+</code></pre>
+<pre class="dark"><code>$ jasmine-dom --config path/to/config.yml --format nice
+
+Failed: 
+ - In Example test two >> Example functions (some more) 
+   >> Should fail!! :: Expected false to be truthy.
+ - In Example test one >> Example functions 
+   >> Should fail!! :: Expected 3 to equal 8.
+</code></pre>
+        </div>
+
+    </div>
+
+    <div class="column right">
+
+        <h2>5. run in jenkins</h2>
+        <div class="section">
+            <img src="images/jenkins_1.jpg" alt="Jenkins 1">
+            <br><br>
+            <img src="images/jenkins_2.jpg" alt="Jenkins 2">
+            <br><br><hr><div style="text-align: center;">Build...</div><hr><br>
+            <img src="images/jenkins_3.jpg" alt="Jenkins 3">
+        </div>
+
+    </div>
+    
+</body>
+</html>
