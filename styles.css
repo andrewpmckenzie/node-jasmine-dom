@@ -64,15 +64,15 @@ pre.light {
 	color:#227;
 }
 
-img {
+.section img {
 	width:100%;
 	border:solid 3px #eee;
 }
 
-img.half {
+.section img.half {
 	width:47%;
 }
 
-img.half + img {
+.section img.half + img {
 	float:right;
 }
