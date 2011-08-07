@@ -129,7 +129,7 @@ function _parseConfig(config){
 
 	var runnerConfig = [];
 	try {
-		var yaml = require('../lib/node_modules/yaml').eval(file);
+		var yaml = require('yaml').eval(file);
 
 		for(var k in yaml){
 			var runner = yaml[k];
