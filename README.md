@@ -47,13 +47,15 @@ specifying runners
 A single runner file can be provided via the <code>--runner <path_to_runner></code> command. To specify more than one
 runner, use the <code>--config <path_to_config></code> argument and a yaml config file in the format:
 
-    ---
-      test_one:
-        name: This is the name of the first set of tests
-        runner: path/to/runner_1.html
-      test_two:
-        name: This is the name of the second set of tests
-        runner: path/to/another/runner.html
+```yaml
+---
+  test_one:
+    name: This is the name of the first set of tests
+    runner: path/to/runner_1.html
+  test_two:
+    name: This is the name of the second set of tests
+    runner: path/to/another/runner.html
+```
 
 The config file allows you to provide names for your runners. These names will be used when identifying failing tests.
 
