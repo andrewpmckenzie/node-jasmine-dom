@@ -76,3 +76,7 @@ pre.light {
 .section img.half + img {
 	float:right;
 }
+
+.gray {
+	color:#bbb;
+}
