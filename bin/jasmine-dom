@@ -45,7 +45,7 @@ var options = {
 function _getAbsolutePath(file, base){
 	var path;
 	var base = base || process.cwd();
-	if (file.substring(0,1) == "/"){
+	if ( file.match(/^\w:\\|\/\//) ){
 		path = file;
 	} else {
 		path = base + '/' + file;
