@@ -1,6 +1,6 @@
 {
     "name"        : "jasmine-dom"
-,   "version"     : "0.2.5"
+,   "version"     : "0.2.6"
  
 ,   "description" : "Run your jasmine html SpecRunner in node.js."
 ,   "keywords"    : ["javascript testing","bdd","jasmine"]
