@@ -45,30 +45,65 @@ var options = {
 function _getAbsolutePath(file, base){
 	var path;
 	var base = base || process.cwd();
-	if ( file.match(/^\w:\\|\/\//) ){
+	if ( file.substring(0,1) == "/" || file.match(/^\w:\\/) ){
 		path = file;
 	} else {
 		path = base + '/' + file;
 	}
-	return require('path').normalize(path);
+	var absolute = require('path').normalize(path);
+	return absolute;
 };
 
 function _getUsage(){
-	return "Usage: node run.js --runner <path> | --config <path> [--format simple|nice|json|html|junit] [--output <path>] [--server [port] [--refresh <ms interval>]] [--help]\n\n" +
+	return "Usage: node run.js --runner <path> | --config <path> [--format simple|nice|detailed|json|html|junit] [--output <path>] [--server [port] [--refresh <ms interval>]] [--help]\n\n" +
 	       "For more information, visit https://github.com/andrewpmckenzie/node-jasmine-dom";
 };
 
 function _formatNice(obj){
 	if(obj.failed == 0){
-		return "Passed";
+		var message = "====== PASSED ====== \n";
+		for( var k in obj.details ){
+			var details = obj.details[k];
+			message += details.name + " - " + details.total + " tests \n";
+		}
+		return message;
 	} else {
-		var message = "Failed: \n";
+		var message = "====== FAILED ====== \n";
 		for( var k in obj.failureDetails ){
 			var details = obj.failureDetails[k];
 			message += " - In " + details.group + " >> " + details.suite + " >> " + details.spec + " :: " + details.message + "\n";
 		}
 		return message;
 	}
+};
+
+function _formatDetailed(obj){
+    var message = "";
+	if(obj.failed == 0){
+		message = "====== PASSED ====== \n\n";
+	} else {
+		message = "====== FAILED ====== \n\n";
+	}
+
+	for( var k in obj.details ){
+		var details = obj.details[k];
+		var passMessage = '';
+		var failMessage = '';
+
+		for( var kpasses in details.passes){
+		    passMessage += "    - "+details.passes[kpasses]+" \n";
+		}
+        for( var kfailures in details.failures){
+		    failMessage += "    - "+details.failures[kfailures]+" \n";
+		}
+
+		message += details.name + " - " + details.total + " tests \n";
+		message += "  PASSES \n";
+        message += passMessage || "    (none) \n";
+		message += "  FAILURES \n";
+        message += failMessage || "    (none) \n";
+	}
+	return message;
 };
 
 function _format(report){
@@ -91,6 +126,9 @@ function _format(report){
 		case 'junit':
 			result = report.junit;
 			break;
+		case 'detailed':
+    		result = _formatDetailed(report.detailed);
+    		break;
 		default:
 			console.error("Unknown format:" + options.format);
 			process.exit(0);
