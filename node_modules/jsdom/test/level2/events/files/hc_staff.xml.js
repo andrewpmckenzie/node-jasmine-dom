@@ -1,5 +1,5 @@
-var sys = require("sys"),
-    dom = require("../../../../lib/jsdom/level2/core").dom.level2.core;
+var dom = require("../../../../lib/jsdom/level2/core").dom.level2.core,
+    createWindow = require("../../../../lib/jsdom/browser/index").createWindow;
 
 exports.hc_staff = function() {
 
@@ -155,5 +155,7 @@ exports.hc_staff = function() {
   doc.appendChild(doc.createProcessingInstruction("TEST-STYLE", "PIDATA"));
 
   doc.normalize();
+  doc._parentWindow = createWindow(dom);
+
   return doc;
 };

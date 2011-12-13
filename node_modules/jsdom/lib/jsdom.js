@@ -1,5 +1,5 @@
-
 var dom      = exports.dom = require("./jsdom/level3/index").dom,
+    features = require('./jsdom/browser/documentfeatures'),
     fs       = require("fs"),
     pkg      = JSON.parse(fs.readFileSync(__dirname + "/../package.json")),
     request  = require('request'),
@@ -9,6 +9,18 @@ var style = require('./jsdom/level2/style');
 exports.defaultLevel = dom.level3.html;
 exports.browserAugmentation = require("./jsdom/browser/index").browserAugmentation;
 exports.windowAugmentation = require("./jsdom/browser/index").windowAugmentation;
+
+// Proxy feature functions to features module.
+['availableDocumentFeatures',
+ 'defaultDocumentFeatures',
+ 'applyDocumentFeatures'].forEach(function (propName) {
+  exports.__defineGetter__(propName, function () {
+    return features[propName];
+  });
+  exports.__defineSetter__(propName, function (val) {
+    return features[propName] = val;
+  });
+});
 
 exports.debugMode = false;
 
@@ -47,12 +59,12 @@ exports.jsdom = function (html, level, options) {
                  new browser.HTMLDocument(options) :
                  new browser.Document(options);
 
-  exports.applyDocumentFeatures(doc, options.features);
-  
-  if (!!html) {
-    doc.write(html + '');
-  } else {
+  features.applyDocumentFeatures(doc, options.features);
+
+  if (typeof html === 'undefined' || html === null) {
     doc.write('<html><head></head><body></body></html>');
+  } else {
+    doc.write(html + '');
   }
 
   if (doc.close && !options.deferClose) {
@@ -89,55 +101,6 @@ exports.html = function(html, level, options) {
     html = '<html>' + html + '</html>';
   }
   return exports.jsdom(html, level, options);
-};
-
-exports.availableDocumentFeatures = [
-  'FetchExternalResources',
-  'ProcessExternalResources',
-  'MutationEvents',
-  'QuerySelector'
-];
-
-exports.defaultDocumentFeatures = {
-  "FetchExternalResources"   : ['script'/*, 'img', 'css', 'frame', 'link'*/],
-  "ProcessExternalResources" : ['script'/*, 'frame', 'iframe'*/],
-  "MutationEvents"           : '2.0',
-  "QuerySelector"            : false
-};
-
-exports.applyDocumentFeatures = function(doc, features) {
-  var i, maxFeatures = exports.availableDocumentFeatures.length,
-      defaultFeatures = exports.defaultDocumentFeatures,
-      j,
-      k,
-      featureName,
-      featureSource;
-
-  features = features || {};
-
-  for (i=0; i<maxFeatures; i++) {
-    featureName = exports.availableDocumentFeatures[i];
-    if (typeof features[featureName] !== 'undefined') {
-      featureSource = features[featureName];
-    } else if (defaultFeatures[featureName]) {
-      featureSource = defaultFeatures[featureName];
-    } else {
-      continue;
-    }
-
-    doc.implementation.removeFeature(featureName);
-
-    if (typeof featureSource !== 'undefined') {
-      if (featureSource instanceof Array) {
-        k = featureSource.length;
-        for (j=0; j<k; j++) {
-          doc.implementation.addFeature(featureName, featureSource[j]);
-        }
-      } else {
-        doc.implementation.addFeature(featureName, featureSource);
-      }
-    }
-  }
 };
 
 exports.jQueryify = exports.jsdom.jQueryify = function (window /* path [optional], callback */) {
@@ -195,23 +158,28 @@ exports.env = exports.jsdom.env = function() {
       config.src = [config.src];
     }
 
-    var 
+    var
     options    = {
-      features: {
+      features: config.features || {
         'FetchExternalResources' : false,
         'ProcessExternalResources' : false
       },
       url: config.url
     },
     window     = exports.html(html, null, options).createWindow(),
-    features   = window.document.implementation._features,
+    features   = JSON.parse(JSON.stringify(window.document.implementation._features)),
     docsLoaded = 0,
-    totalDocs  = config.scripts.length,
+    totalDocs  = config.scripts.length + config.src.length,
     readyState = null,
     errors     = null;
 
     if (!window || !window.document) {
-      return callback(new Error('JSDOM: a window object could not be created.')); 
+      return callback(new Error('JSDOM: a window object could not be created.'));
+    }
+
+    if( config.document ) {
+      window.document._referrer = config.document.referrer;
+      window.document._cookie = config.document.cookie;
     }
 
     window.document.implementation.addFeature('FetchExternalResources', ['script']);
@@ -222,6 +190,11 @@ exports.env = exports.jsdom.env = function() {
       docsLoaded++;
       if (docsLoaded >= totalDocs) {
         window.document.implementation._features = features;
+
+        if (errors) {
+          errors = errors.concat(window.document.errors || []);
+        }
+
         callback(errors, window);
       }
     }
@@ -242,7 +215,17 @@ exports.env = exports.jsdom.env = function() {
         };
 
         script.src = src;
-        window.document.documentElement.appendChild(script);
+        try {
+          // project against invalid dom
+          // ex: http://www.google.com/foo#bar
+          window.document.documentElement.appendChild(script);
+        } catch(e) {
+          if(!errors) {
+            errors=[];
+          }
+          errors.push(e.error || e.message);
+          scriptComplete();
+        }
       });
 
       config.src.forEach(function(src) {
@@ -266,7 +249,7 @@ exports.env = exports.jsdom.env = function() {
         window.document.documentElement.removeChild(script);
       });
     } else {
-      callback(errors, window);
+      scriptComplete();
     }
   };
 
@@ -281,12 +264,13 @@ exports.env = exports.jsdom.env = function() {
     var url = URL.parse(config.html);
     config.url = config.url || url.href;
     if (url.hostname) {
-      request({ uri: url,
-                encoding: config.encoding || 'utf8',
-                headers: config.headers || {}
-              },
-              function(err, request, body) {
-                processHTML(err, body);
+      request({
+        uri      : url,
+        encoding : config.encoding || 'utf8',
+        headers  : config.headers || {}
+      },
+      function(err, request, body) {
+        processHTML(err, body);
       });
     } else {
       fs.readFile(url.pathname, processHTML);
@@ -322,7 +306,8 @@ exports.env.processArguments = function(args) {
     'done'    : true,
     'scripts' : false,
     'config'  : false,
-    'url'     : false  // the URL for location.href if different from html
+    'url'     : false,  // the URL for location.href if different from html
+    'document': false   // HTMLDocument properties
   },
   propKeys = Object.keys(props),
   config = {

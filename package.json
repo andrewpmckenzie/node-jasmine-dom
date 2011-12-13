@@ -1,6 +1,6 @@
 {
     "name"        : "jasmine-dom"
-,   "version"     : "0.2.6"
+,   "version"     : "0.2.6.1"
  
 ,   "description" : "Run your jasmine html SpecRunner in node.js."
 ,   "keywords"    : ["javascript testing","bdd","jasmine"]
@@ -11,7 +11,7 @@
 ,   "thanks-to"   : "jasmine-node"
 
 ,   "engines"     : { "node" : ">= 0.4.9" }
-,   "dependencies": { "jsdom" : "0.2.1",
+,   "dependencies": { "jsdom" : "0.2.10",
                       "node-static" : "0.5.7",
                       "yaml" : "0.2.1",
                       "request" : "2.0.2",

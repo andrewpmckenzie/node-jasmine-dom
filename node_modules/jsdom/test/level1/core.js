@@ -13136,6 +13136,22 @@ exports.tests = {
   },
 
   /**
+   * If the "refChild" is the same as the "newChild" then don't do anything.
+   */
+  hc_nodeinsertbeforerefchildequal: function(test) {
+    var doc = hc_staff.hc_staff();
+    var elementList = doc.getElementsByTagName("p");
+    var employeeNode = elementList.item(1);
+    var childList = employeeNode.childNodes;
+
+    var refChild = childList.item(3);
+
+    employeeNode.insertBefore(refChild, refChild);
+
+    test.done();
+  },
+
+  /**
    *
    If the "refChild" is null then the
    "insertBefore(newChild,refChild)" method inserts the
@@ -21793,6 +21809,14 @@ exports.tests = {
     test.strictEqual(children.item(children.length-1).nodeType, doc.ELEMENT_NODE, 'After split, the last child should be an ELEMENT_NODE');
     test.strictEqual(children.item(0), firstTextNode, 'After split the first child should still be the same object as before');
     test.strictEqual(children.item(1).nodeType, doc.TEXT_NODE, 'After split the second child should be a text node');
+    test.done();
+  },
+  
+  allow_empty_nodelists : function(test) {
+    var doc = extra.extra();
+    var element = doc.createElement('test');
+    test.strictEqual(element.children.length, 0);
+    test.strictEqual(element.children.toArray().length, 0);
     test.done();
   }
 };

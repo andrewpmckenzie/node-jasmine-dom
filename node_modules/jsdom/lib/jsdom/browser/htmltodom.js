@@ -93,22 +93,20 @@ function HtmlToDom(parser) {
         else {
           var p = new parser.Parser({document: element.ownerDocument});
           p.parse_fragment(html, element);
-          element.appendChild(p.fragment);
         }
       }
     };
   } else {
 
     this.appendHtmlToElement = function(){
-      var sys = require('sys');
-      sys.puts('');
-      sys.puts('###########################################################');
-      sys.puts('#  WARNING: No HTML parser could be found.');
-      sys.puts('#  Element.innerHTML setter support has been disabled');
-      sys.puts('#  Element.innerHTML getter support will still function');
-      sys.puts('#  Download: http://github.com/tautologistics/node-htmlparser');
-      sys.puts('###########################################################');
-      sys.puts('');
+      console.log('');
+      console.log('###########################################################');
+      console.log('#  WARNING: No HTML parser could be found.');
+      console.log('#  Element.innerHTML setter support has been disabled');
+      console.log('#  Element.innerHTML getter support will still function');
+      console.log('#  Download: http://github.com/tautologistics/node-htmlparser');
+      console.log('###########################################################');
+      console.log('');
     };
 
   }
@@ -131,7 +129,12 @@ function setChild(parent, node) {
           newNode.sourceLocation.file = parent.sourceLocation.file;
         }
       } catch (err) {
-        //console.log("raw: "+node.raw);
+        currentDocument.raise('error', 'invalid markup', {
+          exception: err,
+          node : node
+        });
+
+        return null;
       }
     break;
 
@@ -147,6 +150,9 @@ function setChild(parent, node) {
       return null;
     break;
   }
+
+  if (!newNode)
+    return null;
 
   if (node.attribs) {
     for (c in node.attribs) {
