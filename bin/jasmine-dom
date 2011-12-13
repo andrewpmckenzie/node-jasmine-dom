@@ -39,6 +39,7 @@ var options = {
 	port: arguments.server,
 	help: "help" in arguments,
 	refreshInterval: arguments.refresh,
+	routeconsole: "routeconsole" in arguments,
 	config: arguments.config
 };
 
@@ -55,7 +56,7 @@ function _getAbsolutePath(file, base){
 };
 
 function _getUsage(){
-	return "Usage: node run.js --runner <path> | --config <path> [--format simple|nice|detailed|json|html|junit] [--output <path>] [--server [port] [--refresh <ms interval>]] [--help]\n\n" +
+	return "Usage: node run.js --runner <path> | --config <path> [--format simple|nice|detailed|json|html|junit] [--output <path>] [--server [port] [--refresh <ms interval>]] [--routeconsole] [--help]\n\n" +
 	       "For more information, visit https://github.com/andrewpmckenzie/node-jasmine-dom";
 };
 
@@ -218,6 +219,7 @@ require('../lib/jasmine-dom').run({
 	port: options.port,
 	refreshInterval: options.refreshInterval,
 	debug: options.debug,
+	routeConsole: options.routeconsole,
 	onDone: function(report){
 		_processReport(report);
 	}
