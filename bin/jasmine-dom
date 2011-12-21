@@ -82,29 +82,42 @@ function _formatNice(obj){
 function _formatDetailed(obj){
     var message = "";
     if(obj.failed === 0){
-        message = "====== PASSED ====== \n\n";
+        message = "\n====== PASSED ====== \n\n";
     } else {
-        message = "====== FAILED ====== \n\n";
+        message = "\n====== FAILED ====== \n\n";
     }
 
     for( var k in obj.details ){
         var details = obj.details[k];
         var passMessage = '';
         var failMessage = '';
+        var failure;
 
         for( var kpasses in details.passes){
             passMessage += "    - "+details.passes[kpasses]+" \n";
         }
-        for( var kfailures in details.failures){
-            failMessage += "    - "+details.failures[kfailures]+" \n";
+        for( var kfailures in details.failureDetails){
+            failure = details.failureDetails[kfailures];
+            failMessage += "    - "+kfailures+" \n";
+            for( var ifailedtests in failure){
+                failMessage += "        ["+failure[ifailedtests].message+"] \n";
+            }
         }
 
-        message += details.name + " - " + details.total + " tests \n";
+        var name = details.suites[0];
+        message += name + " - " + details.total + " tests \n";
         message += "  PASSES \n";
         message += passMessage || "    (none) \n";
         message += "  FAILURES \n";
         message += failMessage || "    (none) \n";
     }
+    
+    if(obj.failed === 0){
+        message = message + "\n====== PASSED ====== \n\n";
+    } else {
+        message = message + "\n====== FAILED ====== \n\n";
+    }
+    
     return message;
 }
 
