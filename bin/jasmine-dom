@@ -194,7 +194,7 @@ function _parseConfig(config){
             }
         }
 
-        if(runnerConfig.length === 0) throw "No runners specified in config. See examples/config.yaml for format.";
+        if(runnerConfig.length === 0) console.error("No runners specified in config. See examples/config.yaml for format.");
 
     } catch (e) {
         console.log("Invalid config file.\n\n");
