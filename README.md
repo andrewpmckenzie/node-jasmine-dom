@@ -121,7 +121,7 @@ will output:
 example 4
 ---------
 
-    jasmine-dom --config ./examples/config.yaml --format nice
+    jasmine-dom --config ./examples/config.yaml --format detailed
 
 will output:
 
