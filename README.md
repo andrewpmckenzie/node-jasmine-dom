@@ -115,9 +115,37 @@ with ./examples/config.yaml:
 
 will output:
 
-    Failed: 
-     - In Example test two >> Example functions (some more) >> Should fail!! :: Expected false to be truthy.
-     - In Example test one >> Example functions >> Should fail!! :: Expected 3 to equal 8.
+    ====== FAILED ====== 
+     - In A suite that fails >> Example functions (should fail) >> Should fail!! :: Expected 3 to equal 8.
+
+example 4
+---------
+
+    jasmine-dom --config ./examples/config.yaml --format nice
+
+will output:
+
+    ====== FAILED ====== 
+
+    Example functions (should fail) - 2 tests 
+      PASSES 
+        - Should multiply two numbers 
+      FAILURES 
+        - Should fail!! 
+            [Expected 3 to equal 8.] 
+    Example functions that update the DOM - 2 tests 
+      PASSES 
+        - Should add two numbers 
+        - Should divide two numbers 
+      FAILURES 
+        (none) 
+
+    ====== FAILED ====== 
+
+
+changelog
+---------
+0.3.0 - 22-12-2012 - Added 'detailed' report format. Made examples a bit clearer.
 
 have you seen **[jasmine-node][5]**?
 ------------------------------------
