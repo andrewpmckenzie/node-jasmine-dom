@@ -30,7 +30,8 @@ You can optionally provide the following arguments:
                                  of the tests. You can also specify an optional <code>--refresh
                                  intervalInMS</code> argument to specify the wait between running
                                  the tests (because the server is constantly running 'em).
- * <code>--routeconsole</code>, calls to window.console.log (or error, warn, info) will be displayed in the console
+ * <code>--routeconsole</code>, calls to window.console.log (or error, warn, info) within the tests / tested code
+                                will be displayed in the terminal output
 
 server
 ------
