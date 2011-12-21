@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title>Jasmine Test Runner - regression</title>
+	<link rel="stylesheet" type="text/css" href="lib/jasmine/jasmine.css">
+	<script src="lib/jasmine/jasmine.js"></script>
+	<script src="lib/jasmine/jasmine-html.js"></script>
+
+	<!-- include helper files here... -->
+	<script src="lib/jquery/jquery.js"></script>
+
+	<!-- include source files here... -->
+	<script src="src/regression.js"></script>
+
+	<!-- include spec files here... -->
+	<script src="spec/regression_spec.js"></script>
+
+</head>
+<body>
+
+<div id="radio_trigger_test">
+    <input type="radio" name="trigger_test" value="1" id="radio_1" />
+    <input type="radio" name="trigger_test" value="2" id="radio_2" checked />
+    <input type="radio" name="trigger_test" value="3" id="radio_3" />
+</div>
+
+<div id="click_trigger_test">
+    <a href="#" id="click_test"></a>
+</div>
+
+<div id="select_test">
+    <select>
+        <option val="one">one</option>
+        <option val="two">two</option>
+        <option val="three">three</option>
+    </select>
+</div>
+
+<script type="text/javascript">
+  jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+  jasmine.getEnv().execute();
+</script>
+
+</body>
+</html>

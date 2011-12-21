@@ -1,4 +1,5 @@
-describe("Example functions", function(){
+describe("Example functions (should fail)", function(){
+
 	it("Should multiply two numbers", function(){
 		var result = EXAMPLES.multiply(5,8);
 
@@ -9,4 +10,5 @@ describe("Example functions", function(){
 	it("Should fail!!", function(){
 		expect(3).toEqual(8);
 	});
+
 });

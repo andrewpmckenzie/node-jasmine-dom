@@ -1,4 +1,5 @@
-describe("Example functions (some more)", function(){
+describe("Example functions (should pass)", function(){
+
 	it("Should divide two numbers", function(){
 		var result = EXAMPLES.divide(8,2);
 
@@ -6,7 +7,4 @@ describe("Example functions (some more)", function(){
 
 	});
 
-	it("Should fail!!", function(){
-		expect(false).toBeTruthy();
-	});
 });
