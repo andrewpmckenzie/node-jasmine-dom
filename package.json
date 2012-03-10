@@ -10,13 +10,13 @@
 ,   "author"      : "Andrew McKenzie <andrew@mckenzie.name> (http://andrew.mckenzie.name)"
 ,   "thanks-to"   : "jasmine-node"
 
-,   "engines"     : { "node" : ">= 0.4.9" }
-,   "dependencies": { "jsdom" : "0.2.1",
-                      "node-static" : "0.5.7",
-                      "yaml" : "0.2.1",
-                      "request" : "2.0.2",
-                      "cssom" : "0.2.0",
-                      "htmlparser" : "1.7.3"
+,   "engines"     : { "node" : ">= 0.6.0" }
+,   "dependencies": { "jsdom" : "0.2.13",
+                      "node-static" : "0.5.9",
+                      "yaml" : "0.2.3",
+                      "request" : "2.9.153",
+                      "cssom" : "0.2.3",
+                      "htmlparser" : "1.7.4"
                     }
 ,   "bin"         : "bin/jasmine-dom"
 ,   "main"        : "lib/jasmine-dom"
