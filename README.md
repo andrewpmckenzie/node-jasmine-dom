@@ -1,19 +1,17 @@
 node-jasmine-dom
 ================
 
-Run your browser-based [jasmine][1] specs headless with [node.js][2]. Then 
+Run your browser-based [jasmine][1] specs headless with [node.js][2]. Then
 output in one of many formats such as JSON or JUnit XML (perfect
 for integration with CI servers like [Jenkins][3]).
 
 installation
 ------------
-1. you've got [npm][4], right?
-2. Groovy. <code>npm install jasmine-dom</code>, and you're away laughing.
+`npm install -g jasmine-dom`
 
 usage
 -----
-Construct your SpecRunner.html as shown in the jasmine examples,
-then run:
+Construct your SpecRunner.html as shown in the jasmine examples, then run:
 
     jasmine-dom --runner path/to/SpecRunner.html
 
@@ -116,7 +114,7 @@ with ./examples/config.yaml:
 
 will output:
 
-    ====== FAILED ====== 
+    ====== FAILED ======
      - In A suite that fails >> Example functions (should fail) >> Should fail!! :: Expected 3 to equal 8.
 
 example 4
@@ -126,22 +124,22 @@ example 4
 
 will output:
 
-    ====== FAILED ====== 
+    ====== FAILED ======
 
-    Example functions (should fail) - 2 tests 
-      PASSES 
-        - Should multiply two numbers 
-      FAILURES 
-        - Should fail!! 
-            [Expected 3 to equal 8.] 
-    Example functions that update the DOM - 2 tests 
-      PASSES 
-        - Should add two numbers 
-        - Should divide two numbers 
-      FAILURES 
-        (none) 
+    Example functions (should fail) - 2 tests
+      PASSES
+        - Should multiply two numbers
+      FAILURES
+        - Should fail!!
+            [Expected 3 to equal 8.]
+    Example functions that update the DOM - 2 tests
+      PASSES
+        - Should add two numbers
+        - Should divide two numbers
+      FAILURES
+        (none)
 
-    ====== FAILED ====== 
+    ====== FAILED ======
 
 
 changelog
