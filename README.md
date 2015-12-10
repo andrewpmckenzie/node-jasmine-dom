@@ -73,7 +73,7 @@ example 2
     jasmine-dom --runner examples/runner.html --format junit --output javascript_results.xml
 
 will write to javascript_results.xml:
-
+```xml
     <testsuite>
         <testcase classname="/Users/andrew/development/node-jasmine-dom/examples/runner.html.Example_functions_that_update_the_DOM.Should_add_two_numbers" name="expect toEqual 7" time="undefined"/>
         <testcase classname="/Users/andrew/development/node-jasmine-dom/examples/runner.html.Example_functions.Should_multiply_two_numbers" name="expect toEqual 40" time="undefined"/>
@@ -96,7 +96,7 @@ will write to javascript_results.xml:
             </failure>
         </testcase>
     </testsuite>
-
+```
 example 3
 ---------
 
@@ -104,6 +104,7 @@ example 3
 
 with ./examples/config.yaml:
 
+```yaml
     ---
       test_one:
         name: Example test one
@@ -111,6 +112,7 @@ with ./examples/config.yaml:
       test_two:
         name: Example test two
         runner: ./runner2.html
+```
 
 will output:
 
