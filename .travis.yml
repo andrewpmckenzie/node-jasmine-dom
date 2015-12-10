@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- '4.1'
+- '4.0'
+- '0.12'
+- '0.11'
+- '0.10'
+- iojs
+script:
+- npm test
+deploy:
+  provider: npm
+  email: andrewpmckenzie@gmail.com
+  api_key:
+    secure: gqPyyQXPvYAdL1R4enAgjl++wrB4QYy1HHTd88g7pC4DcSaFMogSB1HVccTwyUv48pKVrt5L1e543+sfobuNJNvW3hmHr8YX6UaE2w9UUtoBtYrht9D/KvPO/Fa608IZ8TPUg0Rdp9XLngNLq5DkEymDaxGxkGojmnssEuoTMx4=
+  on:
+    tags: true
+    repo: andrewpmckenzie/node-jasmine-dom
