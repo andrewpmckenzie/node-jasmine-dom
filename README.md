@@ -144,9 +144,10 @@ will output:
 
 changelog
 ---------
-1.0.0 -  7-12-2012 - Dusted off the cobwebs. Upgraded jsdom to v1.5.0 to work with
-                     modern node versions. Also needed to bump min node to v0.10.38.
-0.3.0 - 22-12-2012 - Added 'detailed' report format. Made examples a bit clearer.
+|Version|Date       |Description          |
+|-------|-----------|---------------------|
+| 1.0.0 | 7-12-2012 | Dusted off the cobwebs. Upgraded jsdom to v1.5.0 to work with modern node versions. Also needed to bump min node to v0.10.38. |
+| 0.3.0 | 22-12-2012 | Added 'detailed' report format. Made examples a bit clearer. |
 
 have you seen **[jasmine-node][5]**?
 ------------------------------------
