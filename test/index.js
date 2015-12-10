@@ -121,7 +121,7 @@ describe('node-jasmine-dom', function () {
           assert.deepEqual(toJson(report.detailed), {
             details: [
               {
-                name: '/Users/andrew/development/node-jasmine-dom/examples/runner-fail.html',
+                name: filePath,
                 failureDetails: {
                   'Should fail!!': [
                     {
@@ -134,7 +134,7 @@ describe('node-jasmine-dom', function () {
                       trace: { },
                       suite: 'Example functions (should fail)',
                       spec: 'Should fail!!',
-                      group: '/Users/andrew/development/node-jasmine-dom/examples/runner-fail.html'
+                      group: filePath
                     }
                   ]
                 },
