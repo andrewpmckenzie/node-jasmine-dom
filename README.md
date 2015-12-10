@@ -1,4 +1,4 @@
-node-jasmine-dom
+node-jasmine-dom [![Build Status](https://travis-ci.org/andrewpmckenzie/node-jasmine-dom.svg?branch=master)](https://travis-ci.org/andrewpmckenzie/node-jasmine-dom)
 ================
 
 Run your browser-based [jasmine][1] specs headless with [node.js][2]. Then
