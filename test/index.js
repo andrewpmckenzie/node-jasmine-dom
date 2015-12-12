@@ -1,8 +1,15 @@
 var _ = require('lodash');
 var assert = require('chai').assert;
 var path = require('path');
+var sinon = require('sinon');
 var util = require('util');
 
+var examplesDir = path.normalize(path.join(__dirname, '..', 'examples'));
+
+/**
+ * The report contains Class instances. toJson() leaves objects that can be
+ * cleanly compared with deepEqual.
+ */
 var toJson = function (o) {
   var asString = JSON.stringify(o);
   return JSON.parse(asString);
@@ -193,21 +200,139 @@ describe('node-jasmine-dom', function () {
 
     var args2options = require('../lib/args2options');
 
-    it.only('interprets a config.yml file provided with the --config flag', function () {
-      var configDir = path.normalize(path.join(__dirname, '..', 'examples'));
-      var configPath = path.join(configDir, 'config.yaml');
+    beforeEach(function () {
+      sinon.stub(process, 'exit');
+      sinon.stub(console, 'log');
+      sinon.stub(console, 'error');
+    });
+
+    afterEach(function () {
+      process.exit.restore();
+      console.log.restore();
+      console.error.restore();
+    });
+
+    it('parses a config.yml file provided with the `--config` flag', function () {
+      var configPath = path.join(examplesDir, 'config.yaml');
 
       var options = args2options([ '--config', configPath ]);
       assert.deepEqual(options.runners, [
         {
           name: 'A suite that passes',
-          runner: util.format('%s/runner-pass.html', configDir)
+          runner: util.format('%s/runner-pass.html', examplesDir)
         },
         {
           name: 'A suite that fails',
-          runner: util.format('%s/runner-fail.html', configDir)
+          runner: util.format('%s/runner-fail.html', examplesDir)
         }
       ]);
+    });
+
+    it('parses a runner file provided with the `--runner` flag', function () {
+      var absoluteRunnerPath = path.join(examplesDir, '/a-runner.html');
+      var options = args2options([ '--runner', './examples/a-runner.html' ]);
+      assert.deepEqual(options.runners, [ absoluteRunnerPath ])
+    });
+
+    it('prints results to the console with the `--format nice` flag', function () {
+      var runnerPath = path.join(examplesDir, 'ignore-me.html');
+      var options = args2options([ '--format', 'nice', '--runner', runnerPath ]);
+
+      var formatter = options.onDone;
+      assert.equal(typeof formatter, 'function');
+
+      // Uses console.log (mocked beforeEach)
+      formatter({
+        simple: {
+          details: [
+            {
+              name: runnerPath,
+              failures: [
+                {
+                  type: 'expect', matcherName: 'toEqual', message: 'Expected 3 to equal 8.',
+                  passed_: false, expected: 8, actual: 3,
+                  trace: { },
+                  suite: 'Example functions (should fail)', spec: 'Should fail!!', group: runnerPath
+                }
+              ],
+              passed: 1, failed: 1, total: 2
+            }
+          ],
+          failureDetails: [
+            {
+              type: 'expect', matcherName: 'toEqual', message: 'Expected 3 to equal 8.',
+              passed_: false, expected: 8, actual: 3,
+              trace: { },
+              suite: 'Example functions (should fail)', spec: 'Should fail!!', group: runnerPath
+            }
+          ],
+          passed: 1, failed: 1, total: 2, suites: 1,
+          status: 'Failed'
+        }
+      });
+
+      var consoleLogOutput = _.flatten(_.map(console.log.getCalls(), function (call) { return call.args[0].split('\n'); }));
+      assert.deepEqual(consoleLogOutput, [
+        '====== FAILED ====== ',
+        util.format(' - In %s >> Example functions (should fail) >> Should fail!! :: Expected 3 to equal 8.', runnerPath),
+        ''
+      ]);
+
+    });
+
+
+    it('prints results to the console with the `--format detailed` flag', function () {
+      var runnerPath = path.join(examplesDir, 'ignore-me.html');
+      var options = args2options([ '--format', 'detailed', '--runner', runnerPath ]);
+
+      var formatter = options.onDone;
+      assert.equal(typeof formatter, 'function');
+
+      // Uses console.log (mocked beforeEach)
+      formatter({
+        detailed: {
+          details: [
+            {
+              name: runnerPath,
+              failureDetails: {
+                'Should fail!!': [
+                  {
+                    type: 'expect', matcherName: 'toEqual', message: 'Expected 3 to equal 8.',
+                    passed_: false, expected: 8, actual: 3,
+                    trace: { },
+                    suite: 'Example functions (should fail)', spec: 'Should fail!!', group: runnerPath
+                  }
+                ]
+              },
+              passes: [ 'Should multiply two numbers' ],
+              failures: [ 'Should fail!!' ],
+              suites: [ 'Example functions (should fail)' ],
+              passed: 1, failed: 1, total: 2
+            }
+          ],
+          passed: 1, failed: 1, total: 2, suites: 1,
+          failureDetails: [ 'Should fail!!' ], passDetails: [ 'Should multiply two numbers' ],
+          status: 'Failed'
+        }
+      });
+
+      var consoleLogOutput = _.flatten(_.map(console.log.getCalls(), function (call) { return call.args[0].split('\n'); }));
+      assert.deepEqual(consoleLogOutput, [
+        '',
+        '====== FAILED ====== ',
+        '',
+        'Example functions (should fail) - 2 tests ',
+        '  PASSES ',
+        '    - Should multiply two numbers ',
+        '  FAILURES ',
+        '    - Should fail!! ',
+        '        [Expected 3 to equal 8.] ',
+        '',
+        '====== FAILED ====== ',
+        '',
+        ''
+      ]);
+
     });
   });
 
