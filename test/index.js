@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var assert = require('chai').assert;
-var jasmineDom = require('../lib/jasmine-dom');
 var path = require('path');
 var util = require('util');
 
@@ -12,6 +11,8 @@ var toJson = function (o) {
 describe('node-jasmine-dom', function () {
 
   describe('JasmineRunner', function () {
+
+    var jasmineDom = require('../lib/jasmine-dom');
 
     it('runs a passing spec from an html file', function (done) {
       var filePath = path.normalize(path.join(__dirname, '..', 'examples', 'runner-pass.html'));
@@ -186,6 +187,28 @@ describe('node-jasmine-dom', function () {
       });
     });
 
+  });
+
+  describe('args2options', function () {
+
+    var args2options = require('../lib/args2options');
+
+    it.only('interprets a config.yml file provided with the --config flag', function () {
+      var configDir = path.normalize(path.join(__dirname, '..', 'examples'));
+      var configPath = path.join(configDir, 'config.yaml');
+
+      var options = args2options([ '--config', configPath ]);
+      assert.deepEqual(options.runners, [
+        {
+          name: 'A suite that passes',
+          runner: util.format('%s/runner-pass.html', configDir)
+        },
+        {
+          name: 'A suite that fails',
+          runner: util.format('%s/runner-fail.html', configDir)
+        }
+      ]);
+    });
   });
 
 });
