@@ -200,18 +200,6 @@ describe('node-jasmine-dom', function () {
 
     var args2options = require('../lib/args2options');
 
-    beforeEach(function () {
-      sinon.stub(process, 'exit');
-      sinon.stub(console, 'log');
-      sinon.stub(console, 'error');
-    });
-
-    afterEach(function () {
-      process.exit.restore();
-      console.log.restore();
-      console.error.restore();
-    });
-
     it('parses a config.yml file provided with the `--config` flag', function () {
       var configPath = path.join(examplesDir, 'config.yaml');
 
@@ -241,7 +229,10 @@ describe('node-jasmine-dom', function () {
       var formatter = options.onDone;
       assert.equal(typeof formatter, 'function');
 
-      // Uses console.log (mocked beforeEach)
+      sinon.stub(process, 'exit');
+      sinon.stub(console, 'log');
+      sinon.stub(console, 'error');
+
       formatter({
         simple: {
           details: [
@@ -272,6 +263,11 @@ describe('node-jasmine-dom', function () {
       });
 
       var consoleLogOutput = _.flatten(_.map(console.log.getCalls(), function (call) { return call.args[0].split('\n'); }));
+
+      process.exit.restore();
+      console.log.restore();
+      console.error.restore();
+
       assert.deepEqual(consoleLogOutput, [
         '====== FAILED ====== ',
         util.format(' - In %s >> Example functions (should fail) >> Should fail!! :: Expected 3 to equal 8.', runnerPath),
@@ -280,7 +276,6 @@ describe('node-jasmine-dom', function () {
 
     });
 
-
     it('prints results to the console with the `--format detailed` flag', function () {
       var runnerPath = path.join(examplesDir, 'ignore-me.html');
       var options = args2options([ '--format', 'detailed', '--runner', runnerPath ]);
@@ -288,7 +283,10 @@ describe('node-jasmine-dom', function () {
       var formatter = options.onDone;
       assert.equal(typeof formatter, 'function');
 
-      // Uses console.log (mocked beforeEach)
+      sinon.stub(process, 'exit');
+      sinon.stub(console, 'log');
+      sinon.stub(console, 'error');
+
       formatter({
         detailed: {
           details: [
@@ -317,6 +315,11 @@ describe('node-jasmine-dom', function () {
       });
 
       var consoleLogOutput = _.flatten(_.map(console.log.getCalls(), function (call) { return call.args[0].split('\n'); }));
+
+      process.exit.restore();
+      console.log.restore();
+      console.error.restore();
+
       assert.deepEqual(consoleLogOutput, [
         '',
         '====== FAILED ====== ',
