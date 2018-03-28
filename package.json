@@ -22,7 +22,7 @@
   "dependencies": {
     "cssom": "0.2.3",
     "htmlparser": "1.7.4",
-    "jsdom": "1.5.0",
+    "jsdom": "6.0",
     "lodash": "^3.10.1",
     "node-static": "0.5.9",
     "request": "2.9.153",
