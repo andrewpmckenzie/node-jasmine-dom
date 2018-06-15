@@ -157,7 +157,7 @@ It's provided a lot of inspiration for this project, and may be just what
 you're looking for. If you're not reliant on a DOM, then it's worth checking
 out.
 
-[1]: http://pivotal.github.com/jasmine/
+[1]: https://jasmine.github.io/
 [2]: http://nodejs.org/
 [3]: http://jenkins-ci.org/
 [4]: http://npmjs.org/
